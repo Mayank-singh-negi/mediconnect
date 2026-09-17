@@ -5,9 +5,9 @@ export class AuthCredentialsDto {
   email: string;
 
   @IsNotEmpty()
-  @MinLength(6)
+  @MinLength(12)
   password: string;
 
-  @IsIn(['patient', 'doctor', 'admin'])
-  role: 'patient' | 'doctor' | 'admin';
+  @IsIn(['patient', 'doctor'])
+  role: 'patient' | 'doctor';
 }

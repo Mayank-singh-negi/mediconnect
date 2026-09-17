@@ -13,7 +13,10 @@ export class JwtAuthGuard implements CanActivate {
 
     const token = header.replace('Bearer ', '');
     try {
-      const secret = process.env.JWT_SECRET ?? 'development-secret';
+      const secret = process.env.JWT_SECRET;
+      if (!secret || secret.length < 32) {
+        throw new Error('JWT_SECRET is not securely configured');
+      }
       const payload = jwt.verify(token, secret) as any;
       req.user = { id: payload.sub ?? payload.userId, role: payload.role };
       return true;

@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, UseGuards, Request } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
+import { AdminRegistrationDto } from './dto/admin-registration.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { AuthRateLimitGuard } from './auth-rate-limit.guard';
@@ -13,6 +14,12 @@ export class AuthController {
   @Post('register')
   async register(@Body() dto: AuthCredentialsDto) {
     return this.authService.register(dto.email, dto.password, dto.role);
+  }
+
+  @UseGuards(AuthRateLimitGuard)
+  @Post('bootstrap-admin')
+  async bootstrapAdmin(@Body() dto: AdminRegistrationDto) {
+    return this.authService.registerAdmin(dto.email, dto.password, dto.bootstrapToken);
   }
 
   @UseGuards(AuthRateLimitGuard)

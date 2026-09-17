@@ -26,4 +26,8 @@ export class UsersService {
   findById(id: string) {
     return this.usersRepo.findOne({ where: { id } });
   }
+
+  countByRole(role: User['role']) {
+    return this.usersRepo.count({ where: { role } });
+  }
 }

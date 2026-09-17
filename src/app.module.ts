@@ -20,7 +20,16 @@ import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+      validate: (config) => {
+        if (!config.JWT_SECRET || config.JWT_SECRET.length < 32) {
+          throw new Error('JWT_SECRET must be configured with at least 32 characters');
+        }
+        return config;
+      },
+    }),
     TypeOrmModule.forRoot(ormconfig),
     AuditModule,
     AiModule,

@@ -15,6 +15,8 @@ npm install
 npm run start:dev
 ```
 
+Copy `.env.example` to `.env` and replace both placeholder secrets with random values of at least 32 characters. Public registration supports only patient and doctor accounts. Create the first admin once with `POST /auth/bootstrap-admin` using the configured `ADMIN_BOOTSTRAP_TOKEN`; later admin bootstrap attempts are rejected.
+
 Quick test: upload a file to the records endpoint (replace `$TOKEN`):
 
 ```bash
